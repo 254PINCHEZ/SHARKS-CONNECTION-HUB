@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+
+/* Custom CSS variables for v4 */
+@theme {
+  --color-primary: oklch(0.623 0.214 259.815); /* blue-500 */
+  --color-secondary: oklch(0.765 0.188 200.152); /* cyan-500 */
+  --color-accent: oklch(0.677 0.293 303.9); /* violet-500 */
+}
+
+/* Simple custom styles (avoid @layer for now) */
+body {
+  background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Utility classes */
+.gradient-text {
+  background: linear-gradient(to right, #22d3ee, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
