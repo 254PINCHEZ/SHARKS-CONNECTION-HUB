@@ -92,7 +92,7 @@ const About: React.FC = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'Charles Maina',
+      name: 'JOSEPH KIMANI',
       role: 'Founder & Managing Director',
       description: '15+ years experience in electronics distribution and business management',
       expertise: 'Business Strategy & Operations',
@@ -100,7 +100,7 @@ const About: React.FC = () => {
     },
     {
       id: 2,
-      name: 'Sarah Kimani',
+      name: 'JOYCE Kimani',
       role: 'Technical Director',
       description: 'Certified network engineer with expertise in enterprise solutions and security systems',
       expertise: 'Network Infrastructure & Security',
@@ -108,7 +108,7 @@ const About: React.FC = () => {
     },
     {
       id: 3,
-      name: 'Michael Odhiambo',
+      name: 'DAVID KARANU',
       role: 'Operations Manager',
       description: '10+ years in logistics and supply chain management for electronics distribution',
       expertise: 'Supply Chain & Logistics',
@@ -631,7 +631,7 @@ const About: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link 
-                to="/contact"
+                to="/ContactPage"
                 className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 inline-flex items-center gap-3"
               >
                 <Phone className="w-5 h-5" />

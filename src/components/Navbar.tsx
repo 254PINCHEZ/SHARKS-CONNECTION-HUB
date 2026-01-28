@@ -1,37 +1,90 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logoImage from "../assets/myphoto..jpeg"; // Corrected import path
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // REARRANGED NAV ITEMS: Home first, About second, then everything else
+  const products = [
+    { id: 1, name: "HDMI Cable 1-5m", category: "computerCables", path: "/computerCables" },
+    { id: 2, name: "VGA Cable 1-5m", category: "computerCables", path: "/computerCables" },
+    { id: 3, name: "2GB Snake Cable", category: "computerCables", path: "/computerCables" },
+    { id: 4, name: "UConn Wireless", category: "Accessories", path: "/Accessories" },
+    { id: 5, name: "Botes MP AA", category: "Accessories", path: "/Accessories" },
+    { id: 6, name: "Cat 6 Cable 30m", category: "computerCables", path: "/computerCables" },
+    { id: 7, name: "HD Casing", category: "CCTVCameras", path: "/CCTVCameras" },
+    { id: 8, name: "Bal Astro", category: "ElectricalElectronics", path: "/ElectricalElectronics" },
+    { id: 9, name: "Marken", category: "ElectricalElectronics", path: "/ElectricalElectronics" },
+    { id: 10, name: "CCTV Camera", category: "CCTVCameras", path: "/CCTVCameras" },
+    { id: 11, name: "Computer Accessories", category: "Accessories", path: "/Accessories" },
+    { id: 12, name: "Electrical Components", category: "ElectricalElectronics", path: "/ElectricalElectronics" },
+  ];
+
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showResults, setShowResults] = useState(false);
+
   const navItems = [
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
-    { to: "/computer-cables", label: "Computer Cables" },
-    { to: "/accessories", label: "Accessories" },
-    { to: "/cctv-cameras", label: "CCTV Cameras" },
-    { to: "/electrical & electronics", label: "Electrical & Electronics" },
-    // { to: "/electronics", label: "Electronics" },
-    { to: "/contact", label: "Contact" },
+    { to: "/computerCables", label: "Computer Cables" },
+    { to: "/Accessories", label: "Accessories" },
+    { to: "/CCTVCameras", label: "CCTV Cameras" },
+    { to: "/ElectricalElectronics", label: "Electrical Electronics" },
+    { to: "/ContactPage", label: "Contact" },
   ];
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    
+    if (query.trim() === "") {
+      setSearchResults([]);
+      setShowResults(false);
+      return;
+    }
+
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase())
+    );
+
+    setSearchResults(filtered);
+    setShowResults(true);
+  };
+
+  const handleProductSelect = (product: any) => {
+    navigate(product.path);
+    setSearchQuery("");
+    setShowResults(false);
+    setIsMenuOpen(false);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim() && searchResults.length > 0) {
+      handleProductSelect(searchResults[0]);
+    }
+  };
+
+  const handleStaffPortalClick = () => {
+    navigate("/ContactPage");
+  };
 
   return (
     <>
-      {/* Main Navigation - Updated with professional colors */}
       <nav className="sticky top-0 z-50 bg-gray-900 text-white shadow-lg border-b border-gray-700">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
-            {/* Logo Section - Updated to match business name */}
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                {/* Professional logo placeholder - matches business colors */}
-                <div className="w-12 h-12 bg-gradient-to-br from-gray-800 to-blue-900 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300 border border-gray-700">
-                  <svg className="w-7 h-7 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                <div className="flex items-center justify-center rounded-lg overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                  <img 
+                    src={logoImage} 
+                    alt="SHARKS CONNECTION HUB Logo" 
+                    className="w-14 h-14 object-contain"
+                  />
                 </div>
               </div>
               <div className="flex flex-col">
@@ -45,7 +98,6 @@ const Navbar: React.FC = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.map((item) => (
                 <Link
@@ -65,36 +117,67 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            {/* Right Side Actions - Removed cart and phone numbers */}
             <div className="hidden lg:flex items-center space-x-6">
-              {/* Search Bar - Updated for professional look */}
               <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2.5 w-64 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-white placeholder-gray-400"
-                />
-                <svg className="absolute left-3 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <form onSubmit={handleSearchSubmit}>
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    onFocus={() => searchQuery.trim() && setShowResults(true)}
+                    className="pl-10 pr-4 py-2.5 w-64 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-white placeholder-gray-400"
+                  />
+                  <svg className="absolute left-3 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </form>
+
+                {showResults && searchResults.length > 0 && (
+                  <div className="absolute top-full mt-1 w-64 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-50 max-h-80 overflow-y-auto">
+                    <div className="p-2 border-b border-gray-700">
+                      <p className="text-xs text-gray-400 font-semibold">Search Results ({searchResults.length})</p>
+                    </div>
+                    {searchResults.map((product) => (
+                      <button
+                        key={product.id}
+                        onClick={() => handleProductSelect(product)}
+                        className="w-full text-left p-3 hover:bg-gray-700 transition-colors border-b border-gray-700 last:border-b-0"
+                      >
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="text-sm font-medium text-white">{product.name}</p>
+                            <p className="text-xs text-gray-400 capitalize">{product.category}</p>
+                          </div>
+                          <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {showResults && searchQuery.trim() && searchResults.length === 0 && (
+                  <div className="absolute top-full mt-1 w-64 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-50 p-4">
+                    <p className="text-sm text-gray-300">No products found for "{searchQuery}"</p>
+                  </div>
+                )}
               </div>
 
-              {/* User Actions - Staff login only */}
               <div className="flex items-center space-x-3">
-                <Link to="/login">
-                  <button className="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm flex items-center gap-2 border border-blue-600">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                    </svg>
-                    Staff Portal
-                  </button>
-                </Link>
+                <button
+                  onClick={handleStaffPortalClick}
+                  className="px-5 py-2.5 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm flex items-center gap-2 border border-blue-600"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  Staff Portal
+                </button>
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-3 rounded-lg hover:bg-gray-800 transition-colors"
@@ -111,7 +194,6 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Mobile Navigation Menu */}
           {isMenuOpen && (
             <div className="lg:hidden py-6 border-t border-gray-700 bg-gray-900">
               <div className="space-y-2">
@@ -138,23 +220,45 @@ const Navbar: React.FC = () => {
                 ))}
               </div>
               
-              {/* Mobile Action Buttons */}
               <div className="mt-6 pt-6 border-t border-gray-700 space-y-4">
-                {/* Mobile Search */}
                 <div className="relative">
                   <input
                     type="text"
                     placeholder="Search products..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    onFocus={() => searchQuery.trim() && setShowResults(true)}
                     className="w-full px-4 py-3 pl-11 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-white placeholder-gray-400"
                   />
                   <svg className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
+
+                {showResults && searchResults.length > 0 && (
+                  <div className="bg-gray-800 border border-gray-700 rounded-lg max-h-48 overflow-y-auto">
+                    <div className="p-2 border-b border-gray-700">
+                      <p className="text-xs text-gray-400 font-semibold">Search Results ({searchResults.length})</p>
+                    </div>
+                    {searchResults.map((product) => (
+                      <button
+                        key={product.id}
+                        onClick={() => handleProductSelect(product)}
+                        className="w-full text-left p-3 hover:bg-gray-700 transition-colors border-b border-gray-700 last:border-b-0"
+                      >
+                        <p className="text-sm font-medium text-white">{product.name}</p>
+                        <p className="text-xs text-gray-400 capitalize">{product.category}</p>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {showResults && searchQuery.trim() && searchResults.length === 0 && (
+                  <div className="bg-gray-800 border border-gray-700 rounded-lg p-3">
+                    <p className="text-sm text-gray-300">No products found for "{searchQuery}"</p>
+                  </div>
+                )}
                 
-                {/* Mobile Contact Info - Removed phone numbers */}
                 <div className="text-center text-sm text-gray-400 pt-4">
                   <div className="mb-3 p-3 bg-gray-800 rounded-lg">
                     <div className="flex items-center justify-center gap-2">
@@ -166,20 +270,30 @@ const Navbar: React.FC = () => {
                   </div>
                 </div>
                 
-                {/* Mobile Staff Login */}
-                <Link to="/login">
-                  <button className="w-full py-3 bg-gradient-to-r from-blue-700 to-blue-800 text-white font-semibold rounded-lg shadow flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                    </svg>
-                    Staff Portal
-                  </button>
-                </Link>
+                <button
+                  onClick={() => {
+                    handleStaffPortalClick();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full py-3 bg-gradient-to-r from-blue-700 to-blue-800 text-white font-semibold rounded-lg shadow flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  Staff Portal
+                </button>
               </div>
             </div>
           )}
         </div>
       </nav>
+
+      {showResults && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowResults(false)}
+        />
+      )}
     </>
   );
 };

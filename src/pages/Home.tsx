@@ -138,7 +138,7 @@ const Home: React.FC = () => {
               {/* Enhanced CTA Section */}
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link 
-                  to="/contact" 
+                  to="/ContactPage" 
                   className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold text-lg py-5 px-12 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 inline-flex items-center gap-3"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>

@@ -130,8 +130,8 @@ const Footer: React.FC = () => {
               <Mail size={18} className="mr-3 text-cyan-400 mt-1 group-hover:scale-110 transition-transform" />
               <div>
                 <p className="font-medium text-white">Email Address</p>
-                <a href="mailto:info@sharksconnectionhub.co.ke" className="text-gray-400 hover:text-cyan-300 transition block mt-1">
-                  info@sharksconnectionhub.co.ke
+                <a href="mailto:kimanijoseph8963@gmail.com" className="text-gray-400 hover:text-cyan-300 transition block mt-1">
+                  kimanijoseph8963@gmail.com
                 </a>
               </div>
             </li>
@@ -239,9 +239,9 @@ const Footer: React.FC = () => {
               <div className="bg-gray-800/50 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700">
                 M-Pesa
               </div>
-              <div className="bg-gray-800/50 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700">
+              {/* <div className="bg-gray-800/50 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700">
                 Visa/MasterCard
-              </div>
+              </div> */}
               <div className="bg-gray-800/50 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700">
                 Bank Transfer
               </div>
